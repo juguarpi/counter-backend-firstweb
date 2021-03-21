@@ -1,17 +1,37 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 var cors = require('cors')
 
+// const {HOST, USER, PASSWORD, DATABASE, PORT1} = process.env;
+// console.log(HOST);
 
 const db = require('knex')({
     client: 'pg',
-    connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : '123',
-      database : 'firstweb'
+    // connection: {
+    //   host : HOST,
+    //   user : USER,
+    //   password : PASSWORD,
+    //   database : DATABASE,
+    //   port: PORT1,
+    //   ssl: {rejectUnauthorized: false }
+    // }
+    
+    //     connection: {
+    //   host : '127.0.0.1',
+    //   user : 'postgres',
+    //   password : '123',
+    //   database : 'firstweb',
+    //   port: '5432'
+    // }
+
+        connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {rejectUnauthorized: false }
     }
+    
+
   });
 
 app.use(express.json()); 
